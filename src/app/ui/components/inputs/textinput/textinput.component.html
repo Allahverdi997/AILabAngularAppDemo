@@ -1,0 +1,19 @@
+<mat-form-field appearance="outline">
+    <mat-label>{{controlName}}</mat-label>
+    <input matInput placeholder="Placeholder" [formControl]="control">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+  <ng-container *ngIf="control?.touched 
+                       && control?.errors ">
+    <div *ngIf="control?.errors?.['required']">
+          {{control?.errors?.['required']|json}}
+    </div>
+    <div *ngIf="control?.errors?.['minLength']">
+      *Deyer 3 simvoldan boyuk olmalidir
+    </div>
+    <div *ngIf="control?.errors?.['email']">
+        *Daxil edilen metn email fromatinda olmalidir.
+      </div>
+      <div *ngIf="control?.errors?.['custom']">{{control.errors?.['custom']| json}}</div>
+  </ng-container>
+  

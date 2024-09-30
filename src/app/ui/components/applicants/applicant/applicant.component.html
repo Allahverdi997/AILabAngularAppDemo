@@ -1,0 +1,8 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer-content>
+        <app-list style="width: 60%;"></app-list>
+    </mat-drawer-content>
+</mat-drawer-container>
+<br/><br/>
+
+<app-add (dataInserted)="refreshApplicants($event)"></app-add>

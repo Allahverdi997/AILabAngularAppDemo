@@ -1,0 +1,27 @@
+<div class="example-container">
+  <form [formGroup]="applicantForm" (ngSubmit)="onSubmit()">
+    <app-textinput [control]="applicantForm.get('name')" [controlName]="'Name'"></app-textinput>
+
+    <app-textinput [control]="applicantForm.get('surname')" [controlName]="'Surname'"></app-textinput>
+    <app-textinput [control]="applicantForm.get('mail')" [controlName]="'Email'"></app-textinput>
+    <app-textinput [control]="applicantForm.get('phone')" [controlName]="'Phone'"></app-textinput>
+    <app-textinput [control]="applicantForm.get('description')" [controlName]="'Description'"></app-textinput>
+    <app-textinput [control]="applicantForm.get('companyName')" [controlName]="'CompanyName'"></app-textinput>
+      <mat-form-field>
+        <mat-label>Services</mat-label>
+        <mat-select formControlName="serviceId">
+          <mat-option value="1">First option</mat-option>
+          <mat-option value="2">Second option</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>ApplicantType</mat-label>
+        <mat-select formControlName="applicantType">
+          <mat-option value="1">First option</mat-option>
+          <mat-option value="2">Second option</mat-option>
+        </mat-select>
+      </mat-form-field>
+<br/>
+      <button type="submit" [disabled]="applicantForm.invalid" mat-stroked-button>Basic</button>
+    </form>
+  </div>
