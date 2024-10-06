@@ -8,4 +8,5 @@ export class ApplicantInsertModel {
         serviceId: number;
         companyName: string;
         applicantType:string;
+        file:FormData;
 }

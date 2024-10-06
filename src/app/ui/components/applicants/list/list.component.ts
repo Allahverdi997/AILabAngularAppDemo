@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, VERSION, Version, ViewChild } from '@angular/core';
 import { ApplicantServiceService } from '../../../../general/componentServices/applicant-service.service';
 import { SpinnerService } from '../../../../general/services/spinner.service';
 import { AlertifyService } from '../../../../admin/services/alertify.service';
@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { SpinnerSelections } from '../../../../general/models/spinner-selections';
 import { AlertifyMethods } from '../../../../admin/enums/alertify-methods';
 import { AlertifyPositions } from '../../../../admin/enums/alertify-positions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-list',
@@ -15,10 +16,13 @@ import { AlertifyPositions } from '../../../../admin/enums/alertify-positions';
   styleUrl: './list.component.css'
 })
 export class ListComponent implements OnInit {
+
   constructor(private service:ApplicantServiceService,
     private spinner:SpinnerService,
-    private alertify:AlertifyService
-   ) {    
+    private alertify:AlertifyService,
+    public translateService:TranslateService
+   ) { 
+     
    }
 
    data:ApplicantModel[]=null;
@@ -29,10 +33,19 @@ export class ListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  public title =`Angular ${VERSION.major} i18n with ngx-translate`;
+
+  public customNumberValue = 12345;
+
+  langs:Array<string>;
+
   async ngOnInit() {
     this.spinner.show(SpinnerSelections.ball_scale_multiple);
 
     this.getApplicants();
+
+    this.langs=this.translateService.getLangs();
+    console.log(this.langs);
   }
 
   async getApplicants(){
@@ -57,5 +70,14 @@ export class ListComponent implements OnInit {
 
   pagination(){
     this.getApplicants();
+  }
+
+  public get translationFormTypeScript(): string {
+    return this.translateService.instant("example5.fromTypeScript");
+  }
+
+  public onChange(selectedLanguage: string): void {
+    debugger;
+    this.translateService.use(selectedLanguage);
   }
 }

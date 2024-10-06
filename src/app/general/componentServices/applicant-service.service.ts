@@ -1,19 +1,21 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpclientService } from '../services/httpclient.service';
 import { ArticleModel } from '../componentModels/ArticleModel';
 import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ApplicantModel } from '../componentModels/ApplicantModel';
 import { ApplicantInsertModel } from '../componentModels/ApplicantInsertModel';
 import { AlertifyService } from '../../admin/services/alertify.service';
 import { ApplicantErrorsModel } from '../componentModels/ApplicantErrorsModel';
+import { LoginModel } from '../models/loginModel';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicantServiceService {
 
-  constructor(private httpClient:HttpclientService) { }
+  constructor(private httpClient:HttpclientService,private router:Router) { }
 
   async getApplicantsWithPagination(datasize:number,page:number,successCallback?:()=>void):Promise<ApplicantModel[]>
   {
@@ -52,10 +54,11 @@ export class ApplicantServiceService {
     return await promiseData;
   }
 
-  async add(model:ApplicantInsertModel,successCallback?:()=>void,failedCallBack?:(errorsModel:ApplicantErrorsModel)=>void):Promise<void>
+  async add(model:FormData,successCallback?:()=>void,failedCallBack?:(errorsModel:ApplicantErrorsModel)=>void):Promise<void>
   {
-    const subscribe$=this.httpClient.post<ApplicantInsertModel>({
-      controller:"Applicant"
+    const subscribe$=this.httpClient.post<any>({
+      controller:"Applicant",
+      headers:new HttpHeaders({"responseType":"blob"})
     },model);
     debugger;
 
@@ -82,5 +85,39 @@ export class ApplicantServiceService {
         console.log(errorResponse);
       }
     );
+  }
+
+  async logIn(model:LoginModel){
+     const obs$=this.httpClient.post({
+      controller:"User",
+      action:"login"
+     },model);
+     debugger;
+
+     obs$.subscribe(
+      (response)=>{
+        localStorage.setItem("Token",response.data);
+        this.returnUrl();
+      },
+      (error:HttpErrorResponse)=>{
+        console.log(error);
+      }
+    );
+  }
+
+  url:string;
+  activatedRoute:ActivatedRoute=inject(ActivatedRoute);
+
+  returnUrl(){
+    
+    this.url=this.activatedRoute.snapshot.queryParams["returnUrl"];
+
+    if(this.url!=null && this.url!="")
+    {
+      this.url=this.url.replace("/","")
+
+      this.router.navigate([this.url]);
+    }
+
   }
 }

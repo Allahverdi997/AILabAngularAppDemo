@@ -1,0 +1,12 @@
+<div class="example-container">
+    <form [formGroup]="applicantForm" (ngSubmit)="onSubmit()">
+      <app-textinput [control]="applicantForm.get('name')" [controlName]="'Name'"></app-textinput>
+  
+      <app-textinput [control]="applicantForm.get('password')" [controlName]="'Password'"></app-textinput>
+
+      	
+<asl-google-signin-button></asl-google-signin-button>
+
+      <button type="submit" [disabled]="applicantForm.invalid" mat-stroked-button>Basic</button>
+    </form>
+  </div>

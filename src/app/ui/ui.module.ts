@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from '../admin/components/components.module';
 import { LayoutModule } from '../admin/layout/layout.module';
@@ -13,11 +13,17 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import { AddComponent } from './components/applicants/add/add.component';
+import { InputsModule } from './components/inputs/inputs.module';
+import { TextinputComponent } from './components/inputs/textinput/textinput.component';
+import { LoginComponent } from './components/login/login.component';
+import {  GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 
 
 
 @NgModule({
   declarations: [
+  
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +37,9 @@ import { AddComponent } from './components/applicants/add/add.component';
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    InputsModule,
+    GoogleSigninButtonModule
   ]
 })
 export class UiModule { }

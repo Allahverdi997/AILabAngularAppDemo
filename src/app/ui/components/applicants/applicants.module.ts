@@ -17,8 +17,14 @@ import {MatButtonModule} from '@angular/material/button';
 import { InputsModule } from '../inputs/inputs.module';
 import { TextinputComponent } from '../inputs/textinput/textinput.component';
 import { DeleteDirectiveDirective } from '../../../general/directives/delete-directive.directive';
+import { TranslateCompiler, TranslateDirective, TranslateLoader, TranslateModule, TranslateParser, TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -41,7 +47,15 @@ import { DeleteDirectiveDirective } from '../../../general/directives/delete-dir
     MatSelectModule,
     ReactiveFormsModule,
     MatButtonModule,
-    InputsModule
+    InputsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      defaultLanguage: "en"
+    })
   ]
 })
 export class ApplicantsModule { }

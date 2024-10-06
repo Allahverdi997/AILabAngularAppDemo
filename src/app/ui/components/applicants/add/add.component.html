@@ -21,7 +21,20 @@
           <mat-option value="2">Second option</mat-option>
         </mat-select>
       </mat-form-field>
+
+<label for="avatar">Choose a profile picture:</label>
+
+<input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" (change)="uploadFile($event)" />
+
+
+
+      <!-- <input type="file" name="File" class="file-input" (change)="uploadFile($event)"></input> -->
+
 <br/>
       <button type="submit" [disabled]="applicantForm.invalid" mat-stroked-button>Basic</button>
     </form>
   </div>
+
+  
+
+
