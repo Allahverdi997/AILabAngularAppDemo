@@ -8,7 +8,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AdminModule } from './admin/admin.module';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { HomeComponent } from './ui/components/home/home.component';
 import { UiModule } from './ui/ui.module';
@@ -20,6 +20,7 @@ import { InputsModule } from './ui/components/inputs/inputs.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import {JwtModule} from '@auth0/angular-jwt';
 import {GoogleLoginProvider, GoogleSigninButtonDirective, SocialAuthServiceConfig, SocialLoginModule} from '@abacritt/angularx-social-login';
+import { HttpHandleErrorsService } from './general/interceptors/http-handle-errors.service';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {GoogleLoginProvider, GoogleSigninButtonDirective, SocialAuthServiceConfi
         ],
         onError: err => console.log(err)
       } as SocialAuthServiceConfig
-    }
+    },
+    {provide:HTTP_INTERCEPTORS,useClass:HttpHandleErrorsService,multi:true}
   ],
   bootstrap: [AppComponent]
 })

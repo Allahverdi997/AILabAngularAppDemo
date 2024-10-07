@@ -96,13 +96,39 @@ export class ApplicantServiceService {
 
      obs$.subscribe(
       (response)=>{
-        localStorage.setItem("Token",response.data);
+        localStorage.setItem("Token",response.data.accessToken);
+        localStorage.setItem("RefreshToken",response.data.refreshToken);
         this.returnUrl();
       },
       (error:HttpErrorResponse)=>{
         console.log(error);
       }
     );
+  }
+
+  getToken(){
+      debugger;
+      const accessToken:string = localStorage.getItem("Token");
+      const refreshToken:string = localStorage.getItem("RefreshToken");
+      
+      const model={accessToken:accessToken,refreshToken:refreshToken};
+
+      const obs$=this.httpClient.post({
+        controller:"User",
+        action:"getToken"
+      },model);
+
+      obs$.subscribe(
+        (response)=>{
+          localStorage.setItem("Token",response.accessToken);
+          localStorage.setItem("RefreshToken",response.refreshToken);
+          this.returnUrl();
+        },
+        (error:HttpErrorResponse)=>{
+          console.log(error);
+        }
+      );
+
   }
 
   url:string;

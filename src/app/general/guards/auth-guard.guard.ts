@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 
 export const authGuardGuard: CanActivateFn = (route, state) => {
 
-  debugger;
   const service:AuthServiceService=inject(AuthServiceService);
   const router:Router = inject(Router);
   const toastr:ToastrService = inject(ToastrService);
@@ -14,7 +13,6 @@ export const authGuardGuard: CanActivateFn = (route, state) => {
 
   if(!result)
   {
-    debugger;
     router.navigate(["login"],{queryParams:{returnUrl:state.url}})
     toastr.error("Giris basarisiz","Giris");
     return false;
